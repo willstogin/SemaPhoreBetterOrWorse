@@ -12,10 +12,9 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme" >
         <category android:name="android.intent.category.LAUNCHER" />
-    </application>
 
     <!-- Declares the input method service -->
-    <service android:name="SemaphorIME"
+    <service android:name=".MyInputMethodService"
         android:label="@string/semaphor_service_label"
         android:permission="android.permission.BIND_INPUT_METHOD">
         <intent-filter>
@@ -24,5 +23,6 @@
         <meta-data android:name="android.view.im"
             android:resource="@xml/method" />
     </service>
+    </application>
 
 </manifest>

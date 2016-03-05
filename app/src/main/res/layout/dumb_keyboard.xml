@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="250dp"
+    android:background="#ffffff"
+    >
+    <LinearLayout
+        android:paddingTop="20dp"
+        android:layout_width="match_parent"
+        android:layout_height="250dp"
+        android:orientation="horizontal"
+        >
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1">
+
+                <TextView
+                    android:id="@+id/left_band_label"
+                    android:layout_centerInParent="true"
+                    android:textSize="20sp"
+                    android:background="#ffffff"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Left Band"
+                    android:layout_alignParentTop="true"
+                    />
+                <TextView
+                    android:layout_centerInParent="true"
+                    android:textSize="20sp"
+                    android:id="@+id/left_band_status"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:text="Connected"
+                    android:layout_below="@+id/left_band_label"
+                    />
+
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1">
+
+                <TextView
+                    android:layout_centerInParent="true"
+                    android:id="@+id/right_band_label"
+                    android:textSize="20sp"
+                    android:background="#ffffff"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Right Band"
+                    android:layout_alignParentTop="true"
+                    />
+                <TextView
+                    android:layout_centerInParent="true"
+                    android:textSize="20sp"
+                    android:id="@+id/right_band_status"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:text="Connected"
+                    android:layout_below="@id/right_band_label"
+                    />
+
+
+
+        </RelativeLayout>
+
+
+    </LinearLayout>
+
+
+
+
+</LinearLayout>
