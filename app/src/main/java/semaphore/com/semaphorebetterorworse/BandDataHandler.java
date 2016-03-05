@@ -27,6 +27,11 @@ public class BandDataHandler extends AsyncTask<Void, Void, Void> {
     private final String TAG = "BandDataHandler";
     private Context context;
 
+
+    // Band abstractions
+    public BandAbstraction leftBand = new BandAbstraction();
+    public BandAbstraction rightBand = new BandAbstraction();
+
     public BandDataHandler(Context context) {
         super();
         this.context = context;
@@ -121,7 +126,25 @@ public class BandDataHandler extends AsyncTask<Void, Void, Void> {
         }
     }
 
-    private class DataInterpreter {
+    private class BandAbstraction {
+        public boolean connected;
+        public float accX;
+        public float accY;
+        public float accZ;
+        public float gyroX;
+        public float gyroY;
+        public float gyroZ;
+
+        public BandAbstraction() {
+            connected = false;
+            accX = 0;
+            accY = 0;
+            accZ = 0;
+            gyroX = 0;
+            gyroY = 0;
+            gyroZ = 0;
+        }
+
 
 
     }
