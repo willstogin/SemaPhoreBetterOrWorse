@@ -121,4 +121,9 @@ public class BandDataHandler extends AsyncTask<Void, Void, Void> {
         }
     }
 
+    private class DataInterpreter {
+
+
+    }
+
 }
