@@ -11,7 +11,7 @@ public class BandDataHandler extends AsyncTask<Void,Void,Void> {
     protected Void doInBackground(Void... params) {
         // Init, get the list of connected mBands
 
-
+        // This is a test
 
 
 
