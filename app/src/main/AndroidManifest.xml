@@ -4,7 +4,7 @@
 
     <!-- Permissions -->
     <uses-permission android:name="android.permission.BLUETOTH"/>
-
+    <uses-permission android:name="com.microsoft.band.service.access.BIND_BAND_SERVICE"/>
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
