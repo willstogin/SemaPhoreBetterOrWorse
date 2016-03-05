@@ -18,10 +18,11 @@ public class MyInputMethodService extends InputMethodService
     @Override
     public View onCreateInputView(){
         //implement me
-        kv = (KeyboardView)getLayoutInflater().inflate(R.layout.keyboard, null);
-        keyboard = new Keyboard(this, R.xml.qwerty);
-        kv.setKeyboard(keyboard);
-        kv.setOnKeyboardActionListener(this);
+//        kv = (KeyboardView)getLayoutInflater().inflate(R.layout.keyboard, null);
+//        keyboard = new Keyboard(this, R.xml.qwerty);
+//        kv.setKeyboard(keyboard);
+//        kv.setOnKeyboardActionListener(this);
+        View kv = getLayoutInflater().inflate(R.layout.dumb_keyboard, null);
         return kv;
     }
 
