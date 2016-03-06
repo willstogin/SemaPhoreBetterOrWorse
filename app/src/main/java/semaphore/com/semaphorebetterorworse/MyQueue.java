@@ -26,9 +26,10 @@ public class MyQueue  {
 
     public boolean isHomogeneous(){
         boolean isSame = true;
-        String strarr[] = (String[]) queue.toArray();
+        String strarr[] = new String[size];
+        queue.toArray(strarr);
         for (int i = 1; i < size; i++){
-            if (! strarr[i-1].equals(strarr[i])){
+            if (strarr[i-1]!=null && strarr[i] != null && ! strarr[i-1].equals(strarr[i])){
                 isSame = false;
             }
         }
