@@ -4,8 +4,9 @@
 
     <!-- Permissions -->
     <uses-permission android:name="android.permission.BLUETOOTH" />
-    <uses-permission android:name="android.permission.BLUETOTH"/>
-    <uses-permission android:name="com.microsoft.band.service.access.BIND_BAND_SERVICE"/>
+    <uses-permission android:name="android.permission.BLUETOTH" />
+    <uses-permission android:name="com.microsoft.band.service.access.BIND_BAND_SERVICE" />
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -14,16 +15,20 @@
         android:theme="@style/AppTheme" >
         <category android:name="android.intent.category.LAUNCHER" />
 
-    <!-- Declares the input method service -->
-    <service android:name=".MyInputMethodService"
-        android:label="@string/semaphor_service_label"
-        android:permission="android.permission.BIND_INPUT_METHOD">
-        <intent-filter>
-            <action android:name="android.view.InputMethod" />
-        </intent-filter>
-        <meta-data android:name="android.view.im"
-            android:resource="@xml/method" />
-    </service>
+        <!-- Declares the input method service -->
+        <service
+            android:name=".MyInputMethodService"
+            android:label="@string/semaphor_service_label"
+            android:permission="android.permission.BIND_INPUT_METHOD" >
+            <intent-filter>
+                <action android:name="android.view.InputMethod" />
+            </intent-filter>
+
+            <meta-data
+                android:name="android.view.im"
+                android:resource="@xml/method" />
+        </service>
+
     </application>
 
 </manifest>

@@ -2,4 +2,5 @@
     <string name="app_name">SemaPhoreBetterOrWorse</string>
     <string name="semaphor_service_label">SemaPhoreBetterOrWorse</string>
     <string name="subtype_en_US">English (US)</string>
+    <string name="title_activity_main">MainActivity</string>
 </resources>

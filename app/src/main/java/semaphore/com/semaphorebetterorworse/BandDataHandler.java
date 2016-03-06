@@ -1,6 +1,11 @@
 package semaphore.com.semaphorebetterorworse;
 
+import android.app.Activity;
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.Color;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.util.Log;
 
 import com.microsoft.band.BandClient;
@@ -13,8 +18,21 @@ import com.microsoft.band.ConnectionState;
 import com.microsoft.band.sensors.BandAccelerometerEvent;
 import com.microsoft.band.sensors.BandAccelerometerEventListener;
 import com.microsoft.band.sensors.SampleRate;
+import com.microsoft.band.tiles.BandTile;
+import com.microsoft.band.tiles.pages.FlowPanelOrientation;
+import com.microsoft.band.tiles.pages.HorizontalAlignment;
+import com.microsoft.band.tiles.pages.Margins;
+import com.microsoft.band.tiles.pages.PageData;
+import com.microsoft.band.tiles.pages.PageLayout;
+import com.microsoft.band.tiles.pages.PageRect;
+import com.microsoft.band.tiles.pages.ScrollFlowPanel;
+import com.microsoft.band.tiles.pages.VerticalAlignment;
+import com.microsoft.band.tiles.pages.WrappedTextBlock;
+import com.microsoft.band.tiles.pages.WrappedTextBlockData;
+import com.microsoft.band.tiles.pages.WrappedTextBlockFont;
 
 import java.util.EventListener;
+import java.util.UUID;
 
 /**
  * Created by William on 3/5/2016
@@ -59,8 +77,13 @@ public class BandDataHandler {
                             rightBand.connected) {
                         // Left is not connected or both are connected, assign to left
                         abstraction = leftBand;
+                        // TODO Create notification to this band saying "this should be left"
+//                        sendBandUpdate(bandClient, "THIS SHOULD BE ON YOUR INNER LEFT WRIST");
+
                     } else {
                         abstraction = rightBand;
+                        // TODO Create notification to this band saying "this should be right"
+//                        sendBandUpdate(bandClient, "THIS SHOULD BE ON YOUR INNER RIGHT WRIST");
                     }
 
                     abstraction.connected = true;
@@ -98,6 +121,7 @@ public class BandDataHandler {
 
     private class BandAccelerometerEventListenerCustom implements BandAccelerometerEventListener, EventListener {
         private BandAbstraction band;
+
         public BandAccelerometerEventListenerCustom(BandAbstraction band) {
             super();
             this.band = band;
@@ -135,16 +159,17 @@ public class BandDataHandler {
         /**
          * coverage includes:
          * A B C D E F G H I J K L M N P Q R S T U V W X Y Z
-         * @param leftPosition The position of the left band
+         *
+         * @param leftPosition  The position of the left band
          * @param rightPosition The position of the right band
          * @return The desired string
          */
-        public String convertPositionsToLetter(BandPosition leftPosition, BandPosition rightPosition){
-            switch (leftPosition){
+        public String convertPositionsToLetter(BandPosition leftPosition, BandPosition rightPosition) {
+            switch (leftPosition) {
                 case Bottom:
                     return "";
                 case LeftBottom:
-                    switch (rightPosition){
+                    switch (rightPosition) {
                         case Bottom:
                             return "A";
                         case LeftTop:
@@ -161,7 +186,7 @@ public class BandDataHandler {
                             return "";
                     }
                 case Left:
-                    switch (rightPosition){
+                    switch (rightPosition) {
                         case Bottom:
                             return "B";
                         case LeftBottom:
@@ -180,7 +205,7 @@ public class BandDataHandler {
                             return "";
                     }
                 case LeftTop:
-                    switch (rightPosition){
+                    switch (rightPosition) {
                         case Bottom:
                             return "C";
                         case Top:
@@ -193,7 +218,7 @@ public class BandDataHandler {
                             return "";
                     }
                 case Top:
-                    switch (rightPosition){
+                    switch (rightPosition) {
                         case Bottom:
                             return "D";
                         case Right:
@@ -204,7 +229,7 @@ public class BandDataHandler {
                             return "";
                     }
                 case TopRight:
-                    switch (rightPosition){
+                    switch (rightPosition) {
                         case Bottom: // Im not sure about this one
                             return "E";
                         case Right:
@@ -222,7 +247,7 @@ public class BandDataHandler {
                             return "Z";
                     }
                 case RightBottom:
-                    switch (rightPosition){
+                    switch (rightPosition) {
                         case Bottom:
                             return "G";
                     }
@@ -236,7 +261,6 @@ public class BandDataHandler {
         }
 
 
-
     }
 
     enum BandPosition {
@@ -248,6 +272,64 @@ public class BandDataHandler {
         TopRight,
         Right,
         RightBottom
+    }
+
+
+    enum TileLayoutIndex {
+        MessagesLayout
+    }
+
+    enum TileMessagesPageElementId {
+        Message1,
+        Message2
+    }
+
+    private void sendBandUpdate(BandClient client, String text) {
+        ScrollFlowPanel panel = new ScrollFlowPanel(new PageRect(0, 0, 245, 102));
+        panel.setFlowPanelOrientation(FlowPanelOrientation.VERTICAL);
+        panel.setHorizontalAlignment(HorizontalAlignment.LEFT);
+        panel.setVerticalAlignment(VerticalAlignment.TOP);
+
+        WrappedTextBlock textBlock1 = new WrappedTextBlock(new PageRect(0, 0, 245, 102),
+                WrappedTextBlockFont.MEDIUM);
+        textBlock1.setId(1);//.ordinal());
+        textBlock1.setMargins(new Margins(15, 0, 15, 0));
+        textBlock1.setColor(Color.WHITE);
+        textBlock1.setAutoHeightEnabled(true);
+        textBlock1.setHorizontalAlignment(HorizontalAlignment.CENTER);
+        textBlock1.setVerticalAlignment(VerticalAlignment.CENTER);
+
+        panel.addElements(textBlock1);
+
+        PageLayout layout = new PageLayout(panel);
+        Drawable myDrawable = context.getDrawable(R.drawable.circle);
+        BandTile tile;
+        UUID titleId = new UUID((long) 0, (long) 0);
+        try {
+            Bitmap mBitmap = ((BitmapDrawable) myDrawable).getBitmap();
+            if (mBitmap != null) {
+                tile = new BandTile.Builder(titleId, "MyTile", mBitmap).setPageLayouts(layout).build();
+                if (!client.getTileManager().addTile(new Activity(), tile).await()) {
+                    Log.e(TAG, "Failed to add tile");
+                } else if (client.getTileManager().setPages(titleId,
+                        new PageData(new UUID((long) 1, (long) 1),
+                                TileLayoutIndex.MessagesLayout.ordinal())
+                .update(new
+                        WrappedTextBlockData(TileMessagesPageElementId.Message1.ordinal(),
+                        "First Message"))
+                ).await()) {
+                    Log.e(TAG, "Failed to do something");
+                }
+            }
+        } catch (NullPointerException e) {
+            e.printStackTrace();
+        } catch (BandIOException e1) {
+            e1.printStackTrace();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        } catch (BandException e) {
+            e.printStackTrace();
+        }
     }
 
 }
