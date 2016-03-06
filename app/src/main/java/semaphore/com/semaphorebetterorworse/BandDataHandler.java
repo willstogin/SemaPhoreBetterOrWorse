@@ -181,6 +181,11 @@ public class BandDataHandler {
                     }
                 }
             } else if (accX < -.25 && accX > -.75) { // May be bottom left or bottom right
+                if (isRight) {
+
+                } else {
+
+                }
                 return BandPosition.TopRight;
             } else { // Always bottom
                 return BandPosition.Top;
