@@ -24,7 +24,6 @@ public class BandDataHandler {
     private final String TAG = "BandDataHandler";
     private Context context;
 
-
     // Band abstractions
     public BandAbstraction leftBand = new BandAbstraction();
     public BandAbstraction rightBand = new BandAbstraction();
@@ -96,7 +95,10 @@ public class BandDataHandler {
 
     }
 
-    private class BandAccelerometerEventListenerCustom implements BandAccelerometerEventListener, EventListener {
+    private class BandAccelerometerEventListenerCustom
+            implements BandAccelerometerEventListener,
+            EventListener {
+
         private BandAbstraction band;
         public BandAccelerometerEventListenerCustom(BandAbstraction band) {
             super();
@@ -112,24 +114,35 @@ public class BandDataHandler {
             Log.v(TAG, "Z: " + Float.toString(event.getAccelerationZ()));
 
             // Update the band abstraction
-            band.accX = event.getAccelerationX();
-            band.accY = event.getAccelerationY();
-            band.accZ = event.getAccelerationZ();
+
+            band.position = determinePosition(
+                    event.getAccelerationX(),
+                    event.getAccelerationY(),
+                    event.getAccelerationZ());
+            //Update ui
+
         }
+
+        //TODO implement this
+        public BandPosition determinePosition(float accX, float accY, float aacZ){
+            if (true){
+                return BandPosition.Top;
+            } else return BandPosition.Bottom;
+        }
+
+
     }
 
     private class BandAbstraction {
         public boolean connected;
-        public float accX;
-        public float accY;
-        public float accZ;
+        public BandPosition position;
 
         public BandAbstraction() {
             connected = false;
-            accX = 0;
-            accY = 0;
-            accZ = 0;
+            position=BandPosition.Bottom;
         }
+
+
 
 
         /**
@@ -234,8 +247,6 @@ public class BandDataHandler {
             }
 
         }
-
-
 
     }
 

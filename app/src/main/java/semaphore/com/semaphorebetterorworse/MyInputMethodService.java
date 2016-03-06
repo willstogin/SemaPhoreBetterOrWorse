@@ -30,16 +30,17 @@ public class MyInputMethodService extends InputMethodService
     }
 
     private class BluetoothTask extends AsyncTask<Void, Void, Void> {
+        private static final String TAG = "BluetoothTask";
         @Override
         protected Void doInBackground(Void... params) {
             // Get bluetooth permission
-            Log.v("asdf", "checking bluetooth");
+            Log.v(TAG, "checking bluetooth");
             BluetoothAdapter mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
             if (mBluetoothAdapter != null) {
-                Log.v("asdf", "Adapter exists");
+                Log.v(TAG, "Adapter exists");
                 // Device does not support Bluetooth
                 if (!mBluetoothAdapter.isEnabled()) {
-                    Log.v("asdf", "Bluetooth is not enabled");
+                    Log.v(TAG, "Bluetooth is not enabled");
                     Intent btIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
                     btIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                     MyInputMethodService.this.startActivity(btIntent);
