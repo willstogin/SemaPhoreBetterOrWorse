@@ -1,11 +1,6 @@
 package semaphore.com.semaphorebetterorworse;
 
-import android.app.Activity;
 import android.content.Context;
-import android.graphics.Bitmap;
-import android.graphics.Color;
-import android.graphics.drawable.BitmapDrawable;
-import android.graphics.drawable.Drawable;
 import android.util.Log;
 
 import com.microsoft.band.BandClient;
@@ -41,7 +36,6 @@ public class BandDataHandler {
     private BandInfo[] pairedBands;
     private final String TAG = "BandDataHandler";
     private Context context;
-
 
     // Band abstractions
     public BandAbstraction leftBand = new BandAbstraction();
@@ -121,7 +115,6 @@ public class BandDataHandler {
 
     private class BandAccelerometerEventListenerCustom implements BandAccelerometerEventListener, EventListener {
         private BandAbstraction band;
-
         public BandAccelerometerEventListenerCustom(BandAbstraction band) {
             super();
             this.band = band;
@@ -140,6 +133,15 @@ public class BandDataHandler {
             band.accY = event.getAccelerationY();
             band.accZ = event.getAccelerationZ();
         }
+
+        //TODO implement this
+        public BandPosition determinePosition(float accX, float accY, float aacZ){
+            if (true){
+                return BandPosition.Top;
+            } else return BandPosition.Bottom;
+        }
+
+
     }
 
     private class BandAbstraction {
@@ -159,17 +161,16 @@ public class BandDataHandler {
         /**
          * coverage includes:
          * A B C D E F G H I J K L M N P Q R S T U V W X Y Z
-         *
-         * @param leftPosition  The position of the left band
+         * @param leftPosition The position of the left band
          * @param rightPosition The position of the right band
          * @return The desired string
          */
-        public String convertPositionsToLetter(BandPosition leftPosition, BandPosition rightPosition) {
-            switch (leftPosition) {
+        public String convertPositionsToLetter(BandPosition leftPosition, BandPosition rightPosition){
+            switch (leftPosition){
                 case Bottom:
                     return "";
                 case LeftBottom:
-                    switch (rightPosition) {
+                    switch (rightPosition){
                         case Bottom:
                             return "A";
                         case LeftTop:
@@ -186,7 +187,7 @@ public class BandDataHandler {
                             return "";
                     }
                 case Left:
-                    switch (rightPosition) {
+                    switch (rightPosition){
                         case Bottom:
                             return "B";
                         case LeftBottom:
@@ -205,7 +206,7 @@ public class BandDataHandler {
                             return "";
                     }
                 case LeftTop:
-                    switch (rightPosition) {
+                    switch (rightPosition){
                         case Bottom:
                             return "C";
                         case Top:
@@ -218,7 +219,7 @@ public class BandDataHandler {
                             return "";
                     }
                 case Top:
-                    switch (rightPosition) {
+                    switch (rightPosition){
                         case Bottom:
                             return "D";
                         case Right:
@@ -229,7 +230,7 @@ public class BandDataHandler {
                             return "";
                     }
                 case TopRight:
-                    switch (rightPosition) {
+                    switch (rightPosition){
                         case Bottom: // Im not sure about this one
                             return "E";
                         case Right:
@@ -247,7 +248,7 @@ public class BandDataHandler {
                             return "Z";
                     }
                 case RightBottom:
-                    switch (rightPosition) {
+                    switch (rightPosition){
                         case Bottom:
                             return "G";
                     }
@@ -259,7 +260,6 @@ public class BandDataHandler {
             }
 
         }
-
 
     }
 
