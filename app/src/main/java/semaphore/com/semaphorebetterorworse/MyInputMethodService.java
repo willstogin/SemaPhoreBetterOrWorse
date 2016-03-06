@@ -6,6 +6,7 @@ import android.inputmethodservice.InputMethodService;
 import android.inputmethodservice.Keyboard;
 import android.inputmethodservice.KeyboardView;
 import android.media.AudioManager;
+import android.nfc.Tag;
 import android.os.AsyncTask;
 import android.os.Handler;
 import android.os.Looper;
@@ -186,7 +187,7 @@ public class MyInputMethodService extends InputMethodService
 
     @Override
     public void swipeRight() {
-
+        Log.v(TAG, "Swiping Right");
     }
 
     @Override
