@@ -180,9 +180,14 @@ public class BandDataHandler {
                         return BandPosition.Left;
                     }
                 }
-            } else if (accX < -.25 && accX > -.75) { // May be bottom left or bottom right
+            } else if (accX < -.25 && accX > -.75) { // May be top left or top right
                 if (isRight) {
-
+                    if (accY < .25) {
+                        // Bottom right
+                        return BandPosition.TopRight;
+                    } else  {
+                        return BandPosition.LeftTop;
+                    }
                 } else {
 
                 }
