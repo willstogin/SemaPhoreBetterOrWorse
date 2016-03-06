@@ -143,9 +143,13 @@ public class MyInputMethodService extends InputMethodService
     }
 
     public void commitCharacter(String character) {
-        InputConnection ic = getCurrentInputConnection();
-        ic.commitText(character, 1);
-        Log.v(TAG, "committing character");
+        try {
+            InputConnection ic = getCurrentInputConnection();
+            ic.commitText(character, 1);
+            Log.v(TAG, "committing character");
+        } catch (NullPointerException e) {
+            Log.e(TAG, "HA! Can't fool us! we caught you");
+        }
     }
 
     @Override

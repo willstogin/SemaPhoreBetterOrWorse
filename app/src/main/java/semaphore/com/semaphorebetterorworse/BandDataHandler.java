@@ -163,7 +163,19 @@ public class BandDataHandler {
             if (accX > .75) { // Always Bottom
                 return BandPosition.Bottom;
             } else if (accX < .75 && accX > .25) { // May be bottom left or bottom right
-                return BandPosition.RightBottom;
+                if (isRight) {
+                    if (acZ < -.4) {
+                        return BandPosition.LeftBottom;
+                    } else {
+                        return BandPosition.RightBottom;
+                    }
+                } else {
+                    if (acZ < -.4) {
+                        return BandPosition.RightBottom;
+                    } else {
+                        return BandPosition.LeftBottom;
+                    }
+                }
             } else if (accX < .25 && accX > -.25) { // May be left or right
                 // If right band and z is close to -1, left side
                 if (isRight) {
@@ -183,19 +195,19 @@ public class BandDataHandler {
             } else if (accX < -.25 && accX > -.75) { // May be top left or top right
                 if (isRight) {
                     if (accY < .25) {
-                        // Bottom right
+                        // top right
                         return BandPosition.LeftTop;
                     } else  {
                         return BandPosition.TopRight;
                     }
                 } else {
                     if (accY > -.25) {
-                        return BandPosition.LeftTop;
-                    } else {
                         return BandPosition.TopRight;
+                    } else {
+                        return BandPosition.LeftTop;
                     }
                 }
-            } else { // Always bottom
+            } else { // Always Top
                 return BandPosition.Top;
 
             }
