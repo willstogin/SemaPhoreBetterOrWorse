@@ -134,26 +134,23 @@ public class BandDataHandler {
             Log.v(TAG, "Z: " + Float.toString(event.getAccelerationZ()));
 
             // Update the band abstraction
-            band.accX = event.getAccelerationX();
-            band.accY = event.getAccelerationY();
-            band.accZ = event.getAccelerationZ();
+            band.position = band.determinePosition(
+                    event.getAccelerationX(),
+                    event.getAccelerationY(),
+                    event.getAccelerationZ());
         }
 
 
 
     }
 
-    private class BandAbstraction {
+    public class BandAbstraction {
         public boolean connected;
-        public float accX;
-        public float accY;
-        public float accZ;
+        public BandPosition position;
 
         public BandAbstraction() {
             connected = false;
-            accX = 0;
-            accY = 0;
-            accZ = 0;
+            position = BandPosition.Bottom;
         }
 
 

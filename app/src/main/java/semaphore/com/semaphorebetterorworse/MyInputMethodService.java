@@ -22,16 +22,41 @@ import java.util.ArrayList;
 public class MyInputMethodService extends InputMethodService
         implements KeyboardView.OnKeyboardActionListener {
 
+    private static final String TAG = "InputMethodService";
     private BandDataHandler dataHandler;
 
     private View mainView;
+
+
 
     @Override
     public View onCreateInputView(){
         //implement mev
         mainView = getLayoutInflater().inflate(R.layout.dumb_keyboard, null);
 //        setVisualizer(BandDataHandler.BandPosition.Left, BandDataHandler.BandPosition.Right);
+        commitCharacter("G");
         new BluetoothTask().execute();
+
+
+
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                Log.v(TAG, "Polling to update the visualizer and the input");
+                while (true) {
+                    if (dataHandler != null) {
+                        setVisualizer(dataHandler.leftBand.position, dataHandler.rightBand.position);
+                    }
+                    try {
+                        wait(200);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+        }).start();
+
+
         return mainView;
     }
 
@@ -58,8 +83,7 @@ public class MyInputMethodService extends InputMethodService
         }
     }
 
-    private KeyboardView kv;
-    private Keyboard keyboard;
+
 
     private boolean caps = false;
 
@@ -94,32 +118,11 @@ public class MyInputMethodService extends InputMethodService
 
     @Override
     public void onKey(int primaryCode, int[] keyCodes) {
-        InputConnection ic = getCurrentInputConnection();
-        playClick(primaryCode);
-        switch(primaryCode){
-            case Keyboard.KEYCODE_DELETE :
-                ic.deleteSurroundingText(1, 0);
-                break;
-            case Keyboard.KEYCODE_SHIFT:
-                caps = !caps;
-                keyboard.setShifted(caps);
-                kv.invalidateAllKeys();
-                break;
-            case Keyboard.KEYCODE_DONE:
-                ic.sendKeyEvent(new KeyEvent(KeyEvent.ACTION_DOWN, KeyEvent.KEYCODE_ENTER));
-                break;
-            default:
-                char code = (char)primaryCode;
-                if(Character.isLetter(code) && caps){
-                    code = Character.toUpperCase(code);
-                }
-                ic.commitText(String.valueOf(code),1);
-        }
     }
 
-    public void commitText(){
+    public void commitCharacter(String character){
         InputConnection ic = getCurrentInputConnection();
-        ic.commitText()
+        ic.commitText(character,1);
     }
 
     @Override
