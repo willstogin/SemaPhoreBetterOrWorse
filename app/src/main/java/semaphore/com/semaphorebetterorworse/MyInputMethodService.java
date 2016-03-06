@@ -54,7 +54,7 @@ public class MyInputMethodService extends InputMethodService
                         queue.add(character);
 
                         if (queue.isHomogeneous()){
-                            Log.v(TAG, "queue is homogeneous");
+                            Log.v(TAG, "queue is homogeneous: \""+character+"\"");
                             commitCharacter(character);
                         }
                     }
