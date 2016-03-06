@@ -130,10 +130,10 @@ public class BandDataHandler {
         @Override
         public void onBandAccelerometerChanged(BandAccelerometerEvent event) {
             // TODO Handle event
-            Log.v(TAG, "Received accelerometer event");
-            Log.v(TAG, "X: " + Float.toString(event.getAccelerationX()));
-            Log.v(TAG, "Y: " + Float.toString(event.getAccelerationY()));
-            Log.v(TAG, "Z: " + Float.toString(event.getAccelerationZ()));
+//            Log.v(TAG, "Received accelerometer event");
+//            Log.v(TAG, "X: " + Float.toString(event.getAccelerationX()));
+//            Log.v(TAG, "Y: " + Float.toString(event.getAccelerationY()));
+//            Log.v(TAG, "Z: " + Float.toString(event.getAccelerationZ()));
 
             // Update the band abstraction
             band.position = band.determinePosition(
