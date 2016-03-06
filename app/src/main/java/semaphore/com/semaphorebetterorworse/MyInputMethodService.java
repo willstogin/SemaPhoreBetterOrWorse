@@ -39,7 +39,6 @@ public class MyInputMethodService extends InputMethodService
         mainView = getLayoutInflater().inflate(R.layout.dumb_keyboard, null);
         new BluetoothTask().execute();
 
-        commitCharacter("G");
 
         new Thread(new Runnable() {
             @Override
@@ -67,6 +66,29 @@ public class MyInputMethodService extends InputMethodService
                                 }
                             });
                         }
+
+
+                        Handler handler = new Handler(Looper.getMainLooper());
+                        handler.post(new Runnable() {
+                            @Override
+                            public void run() {
+                                TextView leftText = (TextView) mainView.findViewById(R.id.left_band_status);
+                                TextView rightText = (TextView) mainView.findViewById(R.id.right_band_status);
+
+                                if (dataHandler.leftBand.connected){
+                                    leftText.setText(R.string.connected);
+                                } else {
+                                    leftText.setText(R.string.disconnected);
+                                }
+                                if (dataHandler.rightBand.connected){
+                                    rightText.setText(R.string.connected);
+                                } else {
+                                    rightText.setText(R.string.disconnected);
+                                }
+                            }
+                        });
+
+
                     }
                     try {
                         Thread.sleep(DELAY);

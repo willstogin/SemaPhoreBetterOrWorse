@@ -3,4 +3,8 @@
     <string name="semaphor_service_label">SemaPhoreBetterOrWorse</string>
     <string name="subtype_en_US">English (US)</string>
     <string name="title_activity_main">MainActivity</string>
+    <string name="disconnected">Disconnected</string>
+    <string name="connected">Connected</string>
+    <string name="left_band">Left Band</string>
+    <string name="right_band">Right Band</string>
 </resources>
