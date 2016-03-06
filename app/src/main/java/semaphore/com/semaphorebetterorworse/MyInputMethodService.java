@@ -12,6 +12,8 @@ import android.view.KeyEvent;
 import android.view.View;
 import android.view.inputmethod.InputConnection;
 
+import java.util.ArrayList;
+
 
 /**
  * Created by ziggypop on 3/5/16.
@@ -19,14 +21,18 @@ import android.view.inputmethod.InputConnection;
  */
 public class MyInputMethodService extends InputMethodService
         implements KeyboardView.OnKeyboardActionListener {
+
     private BandDataHandler dataHandler;
+
+    private View mainView;
 
     @Override
     public View onCreateInputView(){
         //implement me
-        View kv = getLayoutInflater().inflate(R.layout.dumb_keyboard, null);
+        mainView = getLayoutInflater().inflate(R.layout.dumb_keyboard, null);
+//        setVisualizer(BandDataHandler.BandPosition.Left, BandDataHandler.BandPosition.Right);
         new BluetoothTask().execute();
-        return kv;
+        return mainView;
     }
 
     private class BluetoothTask extends AsyncTask<Void, Void, Void> {
@@ -135,4 +141,46 @@ public class MyInputMethodService extends InputMethodService
     public void swipeUp() {
 
     }
+
+    public void setVisualizer(BandDataHandler.BandPosition left, BandDataHandler.BandPosition right){
+        ArrayList<BandDataHandler.BandPosition> positions = new ArrayList<>();
+        positions.add(left);
+        positions.add(right);
+
+        View l = mainView.findViewById(R.id.left_mask);
+        View r = mainView.findViewById(R.id.right_mask);
+        View tr = mainView.findViewById(R.id.top_right_mask);
+        View tl = mainView.findViewById(R.id.top_left_mask);
+        View t = mainView.findViewById(R.id.top_mask);
+        View b = mainView.findViewById(R.id.bottom_mask);
+        View bl = mainView.findViewById(R.id.bottom_left_mask);
+        View br = mainView.findViewById(R.id.bottom_right_mask);
+
+        if (positions.contains(BandDataHandler.BandPosition.Left)){
+            l.setVisibility(View.GONE);
+        } else l.setVisibility(View.VISIBLE);
+        if (positions.contains(BandDataHandler.BandPosition.Right)){
+            r.setVisibility(View.GONE);
+        } else r.setVisibility(View.VISIBLE);
+        if (positions.contains(BandDataHandler.BandPosition.Top)){
+            t.setVisibility(View.GONE);
+        } else t.setVisibility(View.VISIBLE);
+        if (positions.contains(BandDataHandler.BandPosition.Bottom)){
+            b.setVisibility(View.GONE);
+        } else b.setVisibility(View.VISIBLE);
+        if (positions.contains(BandDataHandler.BandPosition.TopRight)){
+            tr.setVisibility(View.GONE);
+        } else tr.setVisibility(View.VISIBLE);
+        if (positions.contains(BandDataHandler.BandPosition.LeftTop)){
+            tl.setVisibility(View.GONE);
+        } else tl.setVisibility(View.VISIBLE);
+        if (positions.contains(BandDataHandler.BandPosition.LeftBottom)){
+            bl.setVisibility(View.GONE);
+        } else bl.setVisibility(View.VISIBLE);
+        if (positions.contains(BandDataHandler.BandPosition.RightBottom)){
+            br.setVisibility(View.GONE);
+        } else br.setVisibility(View.VISIBLE);
+    }
+
+
 }

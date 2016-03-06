@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
+    android:id="@+id/visualizer"
     android:layout_height="match_parent">
 
 
@@ -10,55 +11,162 @@
         android:layout_width="100dp"
         android:layout_height="100dp">
 
+        <TextView
+            android:textSize="24sp"
+            android:text="A"
+            android:id="@+id/sample_letter"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center" />
 
-        <View
-            android:layout_width="15dp"
-            android:layout_height="15dp"
-            android:background="@drawable/circle"
-            />
+        <RelativeLayout
+            android:layout_width="@dimen/ball_size"
+            android:layout_height="@dimen/ball_size"
+            >
+            <View
+                android:layout_width="@dimen/ball_size"
+                android:layout_height="@dimen/ball_size"
+                android:background="@drawable/circle"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentStart="true" />
+            <View
+                android:id="@+id/top_left_mask"
+                android:layout_centerInParent="true"
+                android:layout_width="@dimen/small_ball_size"
+                android:layout_height="@dimen/small_ball_size"
+                android:background="@drawable/small_circle"/>
 
-        <View
-            android:layout_width="15dp"
-            android:layout_height="15dp"
-            android:background="@drawable/circle"
-            android:layout_gravity="right|bottom" />
+        </RelativeLayout>
 
-        <View
-            android:layout_width="15dp"
-            android:layout_height="15dp"
-            android:background="@drawable/circle"
-            android:layout_gravity="right|center_vertical" />
+        <RelativeLayout
+            android:layout_width="@dimen/ball_size"
+            android:layout_height="@dimen/ball_size"
+            android:layout_gravity="right|bottom">
+            <View
+                android:layout_centerInParent="true"
+                android:layout_width="@dimen/ball_size"
+                android:layout_height="@dimen/ball_size"
+                android:background="@drawable/circle"
+                />
+            <View
+                android:id="@+id/bottom_right_mask"
+                android:layout_centerInParent="true"
+                android:layout_width="@dimen/small_ball_size"
+                android:layout_height="@dimen/small_ball_size"
+                android:background="@drawable/small_circle"/>
+        </RelativeLayout>
 
-        <View
-            android:layout_width="15dp"
-            android:layout_height="15dp"
-            android:background="@drawable/circle"
-            android:layout_marginTop="50dp"
-            android:layout_gravity="left|bottom" />
 
-        <View
-            android:layout_width="15dp"
-            android:layout_height="15dp"
-            android:background="@drawable/circle"
-            android:layout_gravity="left|center_vertical" />
+        <RelativeLayout
+            android:layout_width="@dimen/ball_size"
+            android:layout_height="@dimen/ball_size"
+            android:layout_gravity="right|center_vertical">
+            <View
+                android:layout_centerInParent="true"
+                android:layout_width="@dimen/ball_size"
+                android:layout_height="@dimen/ball_size"
+                android:background="@drawable/circle"
+                />
+            <View
+                android:id="@+id/right_mask"
+                android:layout_centerInParent="true"
+                android:layout_width="@dimen/small_ball_size"
+                android:layout_height="@dimen/small_ball_size"
+                android:background="@drawable/small_circle"/>
+        </RelativeLayout>
 
-        <View
-        android:layout_width="15dp"
-        android:layout_height="15dp"
-        android:background="@drawable/circle"
-            android:layout_gravity="center_horizontal|top" />
+        <RelativeLayout
+            android:layout_width="@dimen/ball_size"
+            android:layout_height="@dimen/ball_size"
+            android:layout_gravity="left|bottom">
+            <View
+                android:layout_centerInParent="true"
+                android:layout_width="@dimen/ball_size"
+                android:layout_height="@dimen/ball_size"
+                android:background="@drawable/circle"
+                />
+            <View
+                android:id="@+id/bottom_left_mask"
+                android:layout_centerInParent="true"
+                android:layout_width="@dimen/small_ball_size"
+                android:layout_height="@dimen/small_ball_size"
+                android:background="@drawable/small_circle"/>
 
-        <View
-            android:layout_width="15dp"
-            android:layout_height="15dp"
-            android:background="@drawable/circle"
-            android:layout_gravity="right|top" />
+        </RelativeLayout>
 
-        <View
-            android:layout_width="15dp"
-            android:layout_height="15dp"
-            android:background="@drawable/circle"
-            android:layout_gravity="center_horizontal|bottom" />
+        <RelativeLayout
+            android:layout_width="@dimen/ball_size"
+            android:layout_height="@dimen/ball_size"
+            android:layout_gravity="left|center_vertical">
+            <View
+                android:layout_centerInParent="true"
+                android:layout_width="@dimen/ball_size"
+                android:layout_height="@dimen/ball_size"
+                android:background="@drawable/circle"
+                />
+            <View
+                android:id="@+id/left_mask"
+                android:layout_centerInParent="true"
+                android:layout_width="@dimen/small_ball_size"
+                android:layout_height="@dimen/small_ball_size"
+                android:background="@drawable/small_circle"/>
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="@dimen/ball_size"
+            android:layout_height="@dimen/ball_size"
+            android:layout_gravity="center_horizontal|top">
+            <View
+                android:layout_centerInParent="true"
+                android:layout_width="@dimen/ball_size"
+                android:layout_height="@dimen/ball_size"
+                android:background="@drawable/circle"
+                />
+            <View
+                android:id="@+id/top_mask"
+                android:layout_centerInParent="true"
+                android:layout_width="@dimen/small_ball_size"
+                android:layout_height="@dimen/small_ball_size"
+                android:background="@drawable/small_circle"/>
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="@dimen/ball_size"
+            android:layout_height="@dimen/ball_size"
+            android:layout_gravity="right|top">
+            <View
+                android:layout_centerInParent="true"
+                android:layout_width="@dimen/ball_size"
+                android:layout_height="@dimen/ball_size"
+                android:background="@drawable/circle"
+                />
+            <View
+                android:id="@+id/top_right_mask"
+                android:layout_centerInParent="true"
+                android:layout_width="@dimen/small_ball_size"
+                android:layout_height="@dimen/small_ball_size"
+                android:background="@drawable/small_circle"/>
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="@dimen/ball_size"
+            android:layout_height="@dimen/ball_size"
+            android:layout_gravity="center_horizontal|bottom">
+            <View
+                android:layout_centerInParent="true"
+                android:layout_width="@dimen/ball_size"
+                android:layout_height="@dimen/ball_size"
+                android:background="@drawable/circle"
+                />
+            <View
+                android:id="@+id/bottom_mask"
+                android:layout_centerInParent="true"
+                android:layout_width="@dimen/small_ball_size"
+                android:layout_height="@dimen/small_ball_size"
+                android:background="@drawable/small_circle"/>
+        </RelativeLayout>
+
 
 
     </FrameLayout>
