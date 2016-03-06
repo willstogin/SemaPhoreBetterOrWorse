@@ -1,6 +1,11 @@
 package semaphore.com.semaphorebetterorworse;
 
+import android.app.Activity;
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.Color;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.util.Log;
 
 import com.microsoft.band.BandClient;
@@ -134,12 +139,6 @@ public class BandDataHandler {
             band.accZ = event.getAccelerationZ();
         }
 
-        //TODO implement this
-        public BandPosition determinePosition(float accX, float accY, float aacZ){
-            if (true){
-                return BandPosition.Top;
-            } else return BandPosition.Bottom;
-        }
 
 
     }
@@ -158,107 +157,118 @@ public class BandDataHandler {
         }
 
 
-        /**
-         * coverage includes:
-         * A B C D E F G H I J K L M N P Q R S T U V W X Y Z
-         * @param leftPosition The position of the left band
-         * @param rightPosition The position of the right band
-         * @return The desired string
-         */
-        public String convertPositionsToLetter(BandPosition leftPosition, BandPosition rightPosition){
-            switch (leftPosition){
-                case Bottom:
-                    return "";
-                case LeftBottom:
-                    switch (rightPosition){
-                        case Bottom:
-                            return "A";
-                        case LeftTop:
-                            return "I";
-                        case Top:
-                            return "K";
-                        case TopRight:
-                            return "L";
-                        case Right:
-                            return "M";
-                        case RightBottom:
-                            return "N";
-                        default:
-                            return "";
-                    }
-                case Left:
-                    switch (rightPosition){
-                        case Bottom:
-                            return "B";
-                        case LeftBottom:
-                            return "H";
-                        case LeftTop:
-                            return "O";
-                        case Top:
-                            return "P";
-                        case TopRight:
-                            return "Q";
-                        case Right:
-                            return "R";
-                        case RightBottom:
-                            return "S";
-                        default:
-                            return "";
-                    }
-                case LeftTop:
-                    switch (rightPosition){
-                        case Bottom:
-                            return "C";
-                        case Top:
-                            return "T";
-                        case TopRight:
-                            return "U";
-                        case Right:
-                            return "Y";
-                        default:
-                            return "";
-                    }
-                case Top:
-                    switch (rightPosition){
-                        case Bottom:
-                            return "D";
-                        case Right:
-                            return "J";
-                        case RightBottom:
-                            return "V";
-                        default:
-                            return "";
-                    }
-                case TopRight:
-                    switch (rightPosition){
-                        case Bottom: // Im not sure about this one
-                            return "E";
-                        case Right:
-                            return "W";
-                        case RightBottom:
-                            return "X";
-                        default:
-                            return "";
-                    }
-                case Right:
-                    switch (rightPosition) {
-                        case Bottom:
-                            return "F";
-                        case RightBottom:
-                            return "Z";
-                    }
-                case RightBottom:
-                    switch (rightPosition){
-                        case Bottom:
-                            return "G";
-                    }
-
-
-                default:
-                    //TODO maybe throw an error :/
-                    return "";
+        //TODO implement this
+        public BandPosition determinePosition(float accX, float accY, float acZ){
+            if (accX > .9 && accX < 1){
+                return BandPosition.Top;
+            } else {
+                return BandPosition.Bottom;
             }
+        }
 
+
+    }
+
+
+    /**
+     * coverage includes:
+     * A B C D E F G H I J K L M N P Q R S T U V W X Y Z
+     * @param leftPosition The position of the left band
+     * @param rightPosition The position of the right band
+     * @return The desired string
+     */
+    public String convertPositionsToLetter(BandPosition leftPosition, BandPosition rightPosition){
+        switch (leftPosition){
+            case Bottom:
+                return "";
+            case LeftBottom:
+                switch (rightPosition){
+                    case Bottom:
+                        return "A";
+                    case LeftTop:
+                        return "I";
+                    case Top:
+                        return "K";
+                    case TopRight:
+                        return "L";
+                    case Right:
+                        return "M";
+                    case RightBottom:
+                        return "N";
+                    default:
+                        return "";
+                }
+            case Left:
+                switch (rightPosition){
+                    case Bottom:
+                        return "B";
+                    case LeftBottom:
+                        return "H";
+                    case LeftTop:
+                        return "O";
+                    case Top:
+                        return "P";
+                    case TopRight:
+                        return "Q";
+                    case Right:
+                        return "R";
+                    case RightBottom:
+                        return "S";
+                    default:
+                        return "";
+                }
+            case LeftTop:
+                switch (rightPosition){
+                    case Bottom:
+                        return "C";
+                    case Top:
+                        return "T";
+                    case TopRight:
+                        return "U";
+                    case Right:
+                        return "Y";
+                    default:
+                        return "";
+                }
+            case Top:
+                switch (rightPosition){
+                    case Bottom:
+                        return "D";
+                    case Right:
+                        return "J";
+                    case RightBottom:
+                        return "V";
+                    default:
+                        return "";
+                }
+            case TopRight:
+                switch (rightPosition){
+                    case Bottom: // Im not sure about this one
+                        return "E";
+                    case Right:
+                        return "W";
+                    case RightBottom:
+                        return "X";
+                    default:
+                        return "";
+                }
+            case Right:
+                switch (rightPosition) {
+                    case Bottom:
+                        return "F";
+                    case RightBottom:
+                        return "Z";
+                }
+            case RightBottom:
+                switch (rightPosition){
+                    case Bottom:
+                        return "G";
+                }
+
+
+            default:
+                //TODO maybe throw an error :/
+                return "";
         }
 
     }
