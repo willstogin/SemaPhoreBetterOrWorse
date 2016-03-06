@@ -39,7 +39,6 @@ public class MyInputMethodService extends InputMethodService
         mainView = getLayoutInflater().inflate(R.layout.dumb_keyboard, null);
         new BluetoothTask().execute();
 
-        commitCharacter("G");
 
         new Thread(new Runnable() {
             @Override
