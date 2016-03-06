@@ -159,10 +159,17 @@ public class BandDataHandler {
 
         //TODO implement this
         public BandPosition determinePosition(float accX, float accY, float acZ){
-            if (accX > .9 && accX < 1){
+            if (accX > .75) { // Always top
                 return BandPosition.Top;
-            } else {
+            } else if (accX < .75 && accX > .25) { // May be top left or top right
+                return BandPosition.TopRight;
+            } else if (accX < .25 && accX > -.25) { // May be left or right
+                return BandPosition.Right;
+            } else if (accX < -.25 && accX > -.75) { // May be bottom left or bottom right
+                return BandPosition.RightBottom;
+            } else { // Always bottom
                 return BandPosition.Bottom;
+
             }
         }
 

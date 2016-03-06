@@ -119,7 +119,7 @@ public class MyInputMethodService extends InputMethodService
 
     public void commitText(){
         InputConnection ic = getCurrentInputConnection();
-        ic.commitText()
+//        ic.commitText()
     }
 
     @Override
