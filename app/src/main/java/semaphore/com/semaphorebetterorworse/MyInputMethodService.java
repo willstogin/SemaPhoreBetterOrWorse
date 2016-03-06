@@ -33,10 +33,7 @@ public class MyInputMethodService extends InputMethodService
     public View onCreateInputView() {
         //implement mev
         mainView = getLayoutInflater().inflate(R.layout.dumb_keyboard, null);
-//        setVisualizer(BandDataHandler.BandPosition.Left, BandDataHandler.BandPosition.Right);
-        commitCharacter("G");
         new BluetoothTask().execute();
-
 
         new Thread(new Runnable() {
             @Override
