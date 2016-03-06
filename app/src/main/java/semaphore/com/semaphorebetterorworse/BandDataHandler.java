@@ -184,14 +184,17 @@ public class BandDataHandler {
                 if (isRight) {
                     if (accY < .25) {
                         // Bottom right
-                        return BandPosition.TopRight;
-                    } else  {
                         return BandPosition.LeftTop;
+                    } else  {
+                        return BandPosition.TopRight;
                     }
                 } else {
-
+                    if (accY > -.25) {
+                        return BandPosition.LeftTop;
+                    } else {
+                        return BandPosition.TopRight;
+                    }
                 }
-                return BandPosition.TopRight;
             } else { // Always bottom
                 return BandPosition.Top;
 
