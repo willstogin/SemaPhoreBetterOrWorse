@@ -28,6 +28,8 @@ public class MyInputMethodService extends InputMethodService
 
     private View mainView;
 
+    private static final int DELAY = 500;
+
 
     @Override
     public View onCreateInputView() {
@@ -38,7 +40,7 @@ public class MyInputMethodService extends InputMethodService
         new Thread(new Runnable() {
             @Override
             public void run() {
-                MyQueue queue = new MyQueue(3);
+                MyQueue queue = new MyQueue(4);
                 Log.v(TAG, "Polling to update the visualizer and the input");
                 while (true) {
                     if (dataHandler != null) {
@@ -57,7 +59,7 @@ public class MyInputMethodService extends InputMethodService
                         }
                     }
                     try {
-                        Thread.sleep(200);
+                        Thread.sleep(DELAY);
                     } catch (InterruptedException e) {
                         e.printStackTrace();
                     }
