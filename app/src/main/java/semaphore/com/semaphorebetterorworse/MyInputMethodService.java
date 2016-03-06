@@ -48,7 +48,7 @@ public class MyInputMethodService extends InputMethodService
                         setVisualizer(dataHandler.leftBand.position, dataHandler.rightBand.position);
                     }
                     try {
-                        wait(200);
+                        Thread.sleep(200);
                     } catch (InterruptedException e) {
                         e.printStackTrace();
                     }
