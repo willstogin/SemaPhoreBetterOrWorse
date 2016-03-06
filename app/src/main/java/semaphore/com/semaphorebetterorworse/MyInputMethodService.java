@@ -29,6 +29,7 @@ public class MyInputMethodService extends InputMethodService
     private View mainView;
 
     private static final int DELAY = 500;
+    private static final int QUEUE_SIZE = 4;
 
 
     @Override
@@ -40,7 +41,7 @@ public class MyInputMethodService extends InputMethodService
         new Thread(new Runnable() {
             @Override
             public void run() {
-                MyQueue queue = new MyQueue(4);
+                MyQueue queue = new MyQueue(QUEUE_SIZE);
                 Log.v(TAG, "Polling to update the visualizer and the input");
                 while (true) {
                     if (dataHandler != null) {
