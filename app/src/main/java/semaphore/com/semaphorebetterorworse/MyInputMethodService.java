@@ -45,7 +45,7 @@ public class MyInputMethodService extends InputMethodService
                 while (true) {
                     if (dataHandler != null) {
                         setVisualizer(dataHandler.leftBand.position, dataHandler.rightBand.position);
-                        String character = dataHandler.convertPositionsToLetter(
+                        final String character = dataHandler.convertPositionsToLetter(
                                 dataHandler.leftBand.position,
                                 dataHandler.rightBand.position);
 
@@ -55,7 +55,13 @@ public class MyInputMethodService extends InputMethodService
 
                         if (queue.isHomogeneous()){
                             Log.v(TAG, "queue is homogeneous: \""+character+"\"");
-                            commitCharacter(character);
+                            Handler handler = new Handler(Looper.getMainLooper());
+                            handler.post(new Runnable() {
+                                @Override
+                                public void run() {
+                                    commitCharacter(character);
+                                }
+                            });
                         }
                     }
                     try {
@@ -134,7 +140,8 @@ public class MyInputMethodService extends InputMethodService
 
     public void commitCharacter(String character) {
         InputConnection ic = getCurrentInputConnection();
-//        ic.commitText();
+        ic.commitText(character, 1);
+        Log.v(TAG, "committing character");
     }
 
     @Override
