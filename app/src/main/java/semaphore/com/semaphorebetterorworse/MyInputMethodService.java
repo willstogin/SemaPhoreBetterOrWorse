@@ -7,8 +7,9 @@ import android.inputmethodservice.Keyboard;
 import android.inputmethodservice.KeyboardView;
 import android.media.AudioManager;
 import android.os.AsyncTask;
+import android.os.Handler;
+import android.os.Looper;
 import android.util.Log;
-import android.view.KeyEvent;
 import android.view.View;
 import android.view.inputmethod.InputConnection;
 
@@ -17,7 +18,6 @@ import java.util.ArrayList;
 
 /**
  * Created by ziggypop on 3/5/16.
- *
  */
 public class MyInputMethodService extends InputMethodService
         implements KeyboardView.OnKeyboardActionListener {
@@ -28,15 +28,13 @@ public class MyInputMethodService extends InputMethodService
     private View mainView;
 
 
-
     @Override
-    public View onCreateInputView(){
+    public View onCreateInputView() {
         //implement mev
         mainView = getLayoutInflater().inflate(R.layout.dumb_keyboard, null);
 //        setVisualizer(BandDataHandler.BandPosition.Left, BandDataHandler.BandPosition.Right);
         commitCharacter("G");
         new BluetoothTask().execute();
-
 
 
         new Thread(new Runnable() {
@@ -62,6 +60,7 @@ public class MyInputMethodService extends InputMethodService
 
     private class BluetoothTask extends AsyncTask<Void, Void, Void> {
         private static final String TAG = "BluetoothTask";
+
         @Override
         protected Void doInBackground(Void... params) {
             // Get bluetooth permission
@@ -84,13 +83,12 @@ public class MyInputMethodService extends InputMethodService
     }
 
 
-
     private boolean caps = false;
 
 
-    public void playClick(int keyCode){
-        AudioManager am = (AudioManager)getSystemService(AUDIO_SERVICE);
-        switch(keyCode){
+    public void playClick(int keyCode) {
+        AudioManager am = (AudioManager) getSystemService(AUDIO_SERVICE);
+        switch (keyCode) {
             case 32:
                 am.playSoundEffect(AudioManager.FX_KEYPRESS_SPACEBAR);
                 break;
@@ -101,7 +99,8 @@ public class MyInputMethodService extends InputMethodService
             case Keyboard.KEYCODE_DELETE:
                 am.playSoundEffect(AudioManager.FX_KEYPRESS_DELETE);
                 break;
-            default: am.playSoundEffect(AudioManager.FX_KEYPRESS_STANDARD);
+            default:
+                am.playSoundEffect(AudioManager.FX_KEYPRESS_STANDARD);
         }
 
     }
@@ -120,9 +119,9 @@ public class MyInputMethodService extends InputMethodService
     public void onKey(int primaryCode, int[] keyCodes) {
     }
 
-    public void commitCharacter(String character){
+    public void commitCharacter(String character) {
         InputConnection ic = getCurrentInputConnection();
-        ic.commitText()
+//        ic.commitText();
     }
 
     @Override
@@ -150,44 +149,56 @@ public class MyInputMethodService extends InputMethodService
 
     }
 
-    public void setVisualizer(BandDataHandler.BandPosition left, BandDataHandler.BandPosition right){
-        ArrayList<BandDataHandler.BandPosition> positions = new ArrayList<>();
-        positions.add(left);
-        positions.add(right);
+    public void setVisualizer(BandDataHandler.BandPosition left, BandDataHandler.BandPosition right) {
+        ArrayList<BandDataHandler.BandPosition> positionz = new ArrayList<>();
+        positionz.add(left);
+        positionz.add(right);
 
-        View l = mainView.findViewById(R.id.left_mask);
-        View r = mainView.findViewById(R.id.right_mask);
-        View tr = mainView.findViewById(R.id.top_right_mask);
-        View tl = mainView.findViewById(R.id.top_left_mask);
-        View t = mainView.findViewById(R.id.top_mask);
-        View b = mainView.findViewById(R.id.bottom_mask);
-        View bl = mainView.findViewById(R.id.bottom_left_mask);
-        View br = mainView.findViewById(R.id.bottom_right_mask);
+        final ArrayList positions = positionz;
+        final View l = mainView.findViewById(R.id.left_mask);
+        final View r = mainView.findViewById(R.id.right_mask);
+        final View tr = mainView.findViewById(R.id.top_right_mask);
+        final View tl = mainView.findViewById(R.id.top_left_mask);
+        final View t = mainView.findViewById(R.id.top_mask);
+        final View b = mainView.findViewById(R.id.bottom_mask);
+        final View bl = mainView.findViewById(R.id.bottom_left_mask);
+        final View br = mainView.findViewById(R.id.bottom_right_mask);
 
-        if (positions.contains(BandDataHandler.BandPosition.Left)){
-            l.setVisibility(View.GONE);
-        } else l.setVisibility(View.VISIBLE);
-        if (positions.contains(BandDataHandler.BandPosition.Right)){
-            r.setVisibility(View.GONE);
-        } else r.setVisibility(View.VISIBLE);
-        if (positions.contains(BandDataHandler.BandPosition.Top)){
-            t.setVisibility(View.GONE);
-        } else t.setVisibility(View.VISIBLE);
-        if (positions.contains(BandDataHandler.BandPosition.Bottom)){
-            b.setVisibility(View.GONE);
-        } else b.setVisibility(View.VISIBLE);
-        if (positions.contains(BandDataHandler.BandPosition.TopRight)){
-            tr.setVisibility(View.GONE);
-        } else tr.setVisibility(View.VISIBLE);
-        if (positions.contains(BandDataHandler.BandPosition.LeftTop)){
-            tl.setVisibility(View.GONE);
-        } else tl.setVisibility(View.VISIBLE);
-        if (positions.contains(BandDataHandler.BandPosition.LeftBottom)){
-            bl.setVisibility(View.GONE);
-        } else bl.setVisibility(View.VISIBLE);
-        if (positions.contains(BandDataHandler.BandPosition.RightBottom)){
-            br.setVisibility(View.GONE);
-        } else br.setVisibility(View.VISIBLE);
+
+        Handler handler = new Handler(Looper.getMainLooper());
+
+        handler.post(new Runnable() {
+            @Override
+            public void run() {
+
+                if (positions.contains(BandDataHandler.BandPosition.Left)) {
+                    l.setVisibility(View.GONE);
+                } else l.setVisibility(View.VISIBLE);
+                if (positions.contains(BandDataHandler.BandPosition.Right)) {
+                    r.setVisibility(View.GONE);
+                } else r.setVisibility(View.VISIBLE);
+                if (positions.contains(BandDataHandler.BandPosition.Top)) {
+                    t.setVisibility(View.GONE);
+                } else t.setVisibility(View.VISIBLE);
+                if (positions.contains(BandDataHandler.BandPosition.Bottom)) {
+                    b.setVisibility(View.GONE);
+                } else b.setVisibility(View.VISIBLE);
+                if (positions.contains(BandDataHandler.BandPosition.TopRight)) {
+                    tr.setVisibility(View.GONE);
+                } else tr.setVisibility(View.VISIBLE);
+                if (positions.contains(BandDataHandler.BandPosition.LeftTop)) {
+                    tl.setVisibility(View.GONE);
+                } else tl.setVisibility(View.VISIBLE);
+                if (positions.contains(BandDataHandler.BandPosition.LeftBottom)) {
+                    bl.setVisibility(View.GONE);
+                } else bl.setVisibility(View.VISIBLE);
+                if (positions.contains(BandDataHandler.BandPosition.RightBottom)) {
+                    br.setVisibility(View.GONE);
+                } else br.setVisibility(View.VISIBLE);
+
+
+            }
+        });
     }
 
 
