@@ -212,11 +212,17 @@ public class MyInputMethodService extends InputMethodService
         });
     }
 
-    public void setVisualizerCharcter(String character){
-        TextView visualizedCharacter = (TextView) mainView.findViewById(R.id.sample_letter);
-        visualizedCharacter.setText(character);
+    public void setVisualizerCharcter(final String character) {
+
+
+        Handler handler = new Handler(Looper.getMainLooper());
+        handler.post(new Runnable() {
+            @Override
+            public void run() {
+                TextView visualizedCharacter = (TextView) mainView.findViewById(R.id.sample_letter);
+                visualizedCharacter.setText(character);
+            }
+        });
     }
-
-
 
 }
