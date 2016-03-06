@@ -158,7 +158,6 @@ public class BandDataHandler {
         }
 
 
-        //TODO implement this
         public BandPosition determinePosition(float accX, float accY, float acZ){
             if (accX > .75) { // Always Bottom
                 return BandPosition.Bottom;

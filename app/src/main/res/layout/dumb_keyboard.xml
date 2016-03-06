@@ -23,7 +23,7 @@
                     android:background="#ffffff"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Left Band"
+                    android:text="@string/left_band"
                     android:layout_alignParentTop="true"
                     />
                 <TextView
@@ -32,7 +32,7 @@
                     android:id="@+id/left_band_status"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Connected"
+                    android:text="@string/disconnected"
                     android:layout_below="@+id/left_band_label"
                     />
 
@@ -51,7 +51,7 @@
                     android:background="#ffffff"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Right Band"
+                    android:text="@string/right_band"
                     android:layout_alignParentTop="true"
                     />
                 <TextView
@@ -60,7 +60,7 @@
                     android:id="@+id/right_band_status"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Connected"
+                    android:text="@string/disconnected"
                     android:layout_below="@id/right_band_label"
                     />
 
