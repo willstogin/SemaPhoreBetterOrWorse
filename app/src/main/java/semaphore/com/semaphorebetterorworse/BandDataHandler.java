@@ -43,8 +43,8 @@ public class BandDataHandler {
     private Context context;
 
     // Band abstractions
-    public BandAbstraction leftBand = new BandAbstraction();
-    public BandAbstraction rightBand = new BandAbstraction();
+    public BandAbstraction leftBand = new BandAbstraction(false);
+    public BandAbstraction rightBand = new BandAbstraction(true);
 
     public BandDataHandler(Context context) {
         super();
@@ -76,11 +76,13 @@ public class BandDataHandler {
                             rightBand.connected) {
                         // Left is not connected or both are connected, assign to left
                         abstraction = leftBand;
+                        abstraction.isRight = false;
                         // TODO Create notification to this band saying "this should be left"
 //                        sendBandUpdate(bandClient, "THIS SHOULD BE ON YOUR INNER LEFT WRIST");
 
                     } else {
                         abstraction = rightBand;
+                        abstraction.isRight = true;
                         // TODO Create notification to this band saying "this should be right"
 //                        sendBandUpdate(bandClient, "THIS SHOULD BE ON YOUR INNER RIGHT WRIST");
                     }
@@ -146,26 +148,42 @@ public class BandDataHandler {
 
     public class BandAbstraction {
         public boolean connected;
+        public boolean isRight;
         public BandPosition position;
 
-        public BandAbstraction() {
+        public BandAbstraction(boolean right) {
             connected = false;
+            isRight = right;
             position = BandPosition.Bottom;
         }
 
 
         //TODO implement this
         public BandPosition determinePosition(float accX, float accY, float acZ){
-            if (accX > .75) { // Always top
-                return BandPosition.Top;
-            } else if (accX < .75 && accX > .25) { // May be top left or top right
-                return BandPosition.TopRight;
-            } else if (accX < .25 && accX > -.25) { // May be left or right
-                return BandPosition.Right;
-            } else if (accX < -.25 && accX > -.75) { // May be bottom left or bottom right
-                return BandPosition.RightBottom;
-            } else { // Always bottom
+            if (accX > .75) { // Always Bottom
                 return BandPosition.Bottom;
+            } else if (accX < .75 && accX > .25) { // May be bottom left or bottom right
+                return BandPosition.RightBottom;
+            } else if (accX < .25 && accX > -.25) { // May be left or right
+                // If right band and z is close to -1, left side
+                if (isRight) {
+                    if (acZ < -.75) {
+                        return BandPosition.Left;
+                    } else {
+                        return BandPosition.Right;
+                    }
+                } else {
+                    // Left band
+                    if (acZ < -.75) {
+                        return BandPosition.Right;
+                    } else {
+                        return BandPosition.Left;
+                    }
+                }
+            } else if (accX < -.25 && accX > -.75) { // May be bottom left or bottom right
+                return BandPosition.TopRight;
+            } else { // Always bottom
+                return BandPosition.Top;
 
             }
         }
