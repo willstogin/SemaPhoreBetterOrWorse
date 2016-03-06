@@ -130,10 +130,10 @@ public class BandDataHandler {
         @Override
         public void onBandAccelerometerChanged(BandAccelerometerEvent event) {
             // TODO Handle event
-            Log.v(TAG, "Received accelerometer event");
-            Log.v(TAG, "X: " + Float.toString(event.getAccelerationX()));
-            Log.v(TAG, "Y: " + Float.toString(event.getAccelerationY()));
-            Log.v(TAG, "Z: " + Float.toString(event.getAccelerationZ()));
+//            Log.v(TAG, "Received accelerometer event");
+//            Log.v(TAG, "X: " + Float.toString(event.getAccelerationX()));
+//            Log.v(TAG, "Y: " + Float.toString(event.getAccelerationY()));
+//            Log.v(TAG, "Z: " + Float.toString(event.getAccelerationZ()));
 
             // Update the band abstraction
             band.position = band.determinePosition(
@@ -180,8 +180,21 @@ public class BandDataHandler {
                         return BandPosition.Left;
                     }
                 }
-            } else if (accX < -.25 && accX > -.75) { // May be bottom left or bottom right
-                return BandPosition.TopRight;
+            } else if (accX < -.25 && accX > -.75) { // May be top left or top right
+                if (isRight) {
+                    if (accY < .25) {
+                        // Bottom right
+                        return BandPosition.LeftTop;
+                    } else  {
+                        return BandPosition.TopRight;
+                    }
+                } else {
+                    if (accY > -.25) {
+                        return BandPosition.LeftTop;
+                    } else {
+                        return BandPosition.TopRight;
+                    }
+                }
             } else { // Always bottom
                 return BandPosition.Top;
 
