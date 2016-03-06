@@ -151,7 +151,7 @@ public class BandDataHandler extends AsyncTask<Void, Void, Void> {
          * A B C D E F G H I J K L M N P Q R S T U V W X Y Z
          * @param leftPosition The position of the left band
          * @param rightPosition The position of the right band
-         * @return
+         * @return The desired string
          */
         public String convertPositionsToLetter(BandPosition leftPosition, BandPosition rightPosition){
             switch (leftPosition){

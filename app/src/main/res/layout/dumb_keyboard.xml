@@ -7,12 +7,13 @@
     <LinearLayout
         android:paddingTop="20dp"
         android:layout_width="match_parent"
-        android:layout_height="250dp"
+        android:layout_height="wrap_content"
         android:orientation="horizontal"
         >
+
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="50dp"
             android:layout_weight="1">
 
                 <TextView
@@ -30,7 +31,7 @@
                     android:textSize="20sp"
                     android:id="@+id/left_band_status"
                     android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
+                    android:layout_height="wrap_content"
                     android:text="Connected"
                     android:layout_below="@+id/left_band_label"
                     />
@@ -40,7 +41,7 @@
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="50dp"
             android:layout_weight="1">
 
                 <TextView
@@ -58,7 +59,7 @@
                     android:textSize="20sp"
                     android:id="@+id/right_band_status"
                     android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
+                    android:layout_height="wrap_content"
                     android:text="Connected"
                     android:layout_below="@id/right_band_label"
                     />
@@ -67,9 +68,19 @@
 
         </RelativeLayout>
 
-
     </LinearLayout>
-
+    <RelativeLayout
+        android:layout_marginTop="20dp"
+        android:layout_marginBottom="20dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <FrameLayout
+            android:layout_centerInParent="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+            <include layout="@layout/position_visualizer"/>
+        </FrameLayout>
+    </RelativeLayout>
 
 
 
