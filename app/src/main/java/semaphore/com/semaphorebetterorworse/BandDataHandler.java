@@ -226,6 +226,12 @@ public class BandDataHandler {
     public String convertPositionsToLetter(BandPosition leftPosition, BandPosition rightPosition){
         switch (leftPosition){
             case Bottom:
+                switch (rightPosition){
+                    case Bottom:
+                        return " ";
+                    case TopRight:
+                        return "E";
+                }
                 return "";
             case LeftBottom:
                 switch (rightPosition){
