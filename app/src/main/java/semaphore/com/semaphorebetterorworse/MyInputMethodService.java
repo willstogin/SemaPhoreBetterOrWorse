@@ -1,12 +1,17 @@
 package semaphore.com.semaphorebetterorworse;
 
+import android.bluetooth.BluetoothAdapter;
+import android.content.Intent;
 import android.inputmethodservice.InputMethodService;
 import android.inputmethodservice.Keyboard;
 import android.inputmethodservice.KeyboardView;
 import android.media.AudioManager;
+import android.os.AsyncTask;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.inputmethod.InputConnection;
+
 
 /**
  * Created by ziggypop on 3/5/16.
@@ -14,18 +19,37 @@ import android.view.inputmethod.InputConnection;
  */
 public class MyInputMethodService extends InputMethodService
         implements KeyboardView.OnKeyboardActionListener {
+    private BandDataHandler dataHandler;
 
     @Override
     public View onCreateInputView(){
         //implement me
-//        kv = (KeyboardView)getLayoutInflater().inflate(R.layout.keyboard, null);
-//        keyboard = new Keyboard(this, R.xml.qwerty);
-//        kv.setKeyboard(keyboard);
-//        kv.setOnKeyboardActionListener(this);
         View kv = getLayoutInflater().inflate(R.layout.dumb_keyboard, null);
+        new BluetoothTask().execute();
         return kv;
     }
 
+    private class BluetoothTask extends AsyncTask<Void, Void, Void> {
+        @Override
+        protected Void doInBackground(Void... params) {
+            // Get bluetooth permission
+            Log.v("asdf", "checking bluetooth");
+            BluetoothAdapter mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
+            if (mBluetoothAdapter != null) {
+                Log.v("asdf", "Adapter exists");
+                // Device does not support Bluetooth
+                if (!mBluetoothAdapter.isEnabled()) {
+                    Log.v("asdf", "Bluetooth is not enabled");
+                    Intent btIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
+                    btIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    MyInputMethodService.this.startActivity(btIntent);
+
+                }
+            }
+            dataHandler = new BandDataHandler(MyInputMethodService.this);
+            return null;
+        }
+    }
 
     private KeyboardView kv;
     private Keyboard keyboard;

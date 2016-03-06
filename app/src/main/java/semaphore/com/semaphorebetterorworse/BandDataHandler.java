@@ -1,7 +1,6 @@
 package semaphore.com.semaphorebetterorworse;
 
 import android.content.Context;
-import android.os.AsyncTask;
 import android.util.Log;
 
 import com.microsoft.band.BandClient;
@@ -13,16 +12,14 @@ import com.microsoft.band.BandPendingResult;
 import com.microsoft.band.ConnectionState;
 import com.microsoft.band.sensors.BandAccelerometerEvent;
 import com.microsoft.band.sensors.BandAccelerometerEventListener;
-import com.microsoft.band.sensors.BandGyroscopeEvent;
-import com.microsoft.band.sensors.BandGyroscopeEventListener;
 import com.microsoft.band.sensors.SampleRate;
 
 import java.util.EventListener;
 
 /**
- * Created by William on 3/5/2016.
+ * Created by William on 3/5/2016
  */
-public class BandDataHandler extends AsyncTask<Void, Void, Void> {
+public class BandDataHandler {
     private BandInfo[] pairedBands;
     private final String TAG = "BandDataHandler";
     private Context context;
@@ -56,15 +53,22 @@ public class BandDataHandler extends AsyncTask<Void, Void, Void> {
                 ConnectionState state = pendingResult.await();
                 if (state == ConnectionState.CONNECTED) {
                     // do work on success
+                    // Add to whatever abstraction is not connected
+                    BandAbstraction abstraction;
+                    if (!(leftBand.connected) ||
+                            rightBand.connected) {
+                        // Left is not connected or both are connected, assign to left
+                        abstraction = leftBand;
+                    } else {
+                        abstraction = rightBand;
+                    }
+
+                    abstraction.connected = true;
                     // Register accelerometer listener
                     try {
                         bandClient.getSensorManager().registerAccelerometerEventListener(
-                                new BandAccelerometerEventListenerCustom(), SampleRate.MS128
+                                new BandAccelerometerEventListenerCustom(abstraction), SampleRate.MS128
                         );
-                        bandClient.getSensorManager().registerGyroscopeEventListener(
-                                new CustomBandGyroEventListener(), SampleRate.MS128.MS128
-                        );
-
                     } catch (BandIOException e) {
                         Log.e(TAG, "Failed to register listener");
                         e.printStackTrace();
@@ -85,14 +89,6 @@ public class BandDataHandler extends AsyncTask<Void, Void, Void> {
     }
 
 
-    @Override
-    protected Void doInBackground(Void... params) {
-
-
-        return null;
-    }
-
-
     private void printPairedBands() {
         for (BandInfo info : pairedBands) {
             Log.v(TAG, "Paired band detected: " + info.getName());
@@ -101,6 +97,11 @@ public class BandDataHandler extends AsyncTask<Void, Void, Void> {
     }
 
     private class BandAccelerometerEventListenerCustom implements BandAccelerometerEventListener, EventListener {
+        private BandAbstraction band;
+        public BandAccelerometerEventListenerCustom(BandAbstraction band) {
+            super();
+            this.band = band;
+        }
 
         @Override
         public void onBandAccelerometerChanged(BandAccelerometerEvent event) {
@@ -109,20 +110,11 @@ public class BandDataHandler extends AsyncTask<Void, Void, Void> {
             Log.v(TAG, "X: " + Float.toString(event.getAccelerationX()));
             Log.v(TAG, "Y: " + Float.toString(event.getAccelerationY()));
             Log.v(TAG, "Z: " + Float.toString(event.getAccelerationZ()));
-        }
-    }
 
-
-    private class CustomBandGyroEventListener implements BandGyroscopeEventListener, EventListener {
-
-
-        @Override
-        public void onBandGyroscopeChanged(BandGyroscopeEvent event) {
-            // TODO Handle event
-            Log.v(TAG, "Received Gyro event");
-            Log.v(TAG, "X: " + Float.toString(event.getAccelerationX()));
-            Log.v(TAG, "Y: " + Float.toString(event.getAccelerationY()));
-            Log.v(TAG, "Z: " + Float.toString(event.getAccelerationZ()));
+            // Update the band abstraction
+            band.accX = event.getAccelerationX();
+            band.accY = event.getAccelerationY();
+            band.accZ = event.getAccelerationZ();
         }
     }
 
@@ -131,18 +123,12 @@ public class BandDataHandler extends AsyncTask<Void, Void, Void> {
         public float accX;
         public float accY;
         public float accZ;
-        public float gyroX;
-        public float gyroY;
-        public float gyroZ;
 
         public BandAbstraction() {
             connected = false;
             accX = 0;
             accY = 0;
             accZ = 0;
-            gyroX = 0;
-            gyroY = 0;
-            gyroZ = 0;
         }
 
 
