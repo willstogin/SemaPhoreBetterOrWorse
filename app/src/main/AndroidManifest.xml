@@ -3,6 +3,7 @@
     package="semaphore.com.semaphorebetterorworse" >
 
     <!-- Permissions -->
+    <uses-permission android:name="android.permission.BLUETOOTH" />
     <uses-permission android:name="android.permission.BLUETOTH"/>
     <uses-permission android:name="com.microsoft.band.service.access.BIND_BAND_SERVICE"/>
     <application
