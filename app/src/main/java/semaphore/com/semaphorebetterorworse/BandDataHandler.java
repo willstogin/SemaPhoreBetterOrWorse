@@ -17,7 +17,7 @@ import com.microsoft.band.sensors.SampleRate;
 import java.util.EventListener;
 
 /**
- * Created by William on 3/5/2016.
+ * Created by William on 3/5/2016
  */
 public class BandDataHandler {
     private BandInfo[] pairedBands;
