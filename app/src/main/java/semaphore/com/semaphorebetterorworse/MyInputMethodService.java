@@ -41,6 +41,7 @@ public class MyInputMethodService extends InputMethodService
         new Thread(new Runnable() {
             @Override
             public void run() {
+                MyQueue queue = new MyQueue(3);
                 Log.v(TAG, "Polling to update the visualizer and the input");
                 while (true) {
                     if (dataHandler != null) {
@@ -48,8 +49,15 @@ public class MyInputMethodService extends InputMethodService
                         String character = dataHandler.convertPositionsToLetter(
                                 dataHandler.leftBand.position,
                                 dataHandler.rightBand.position);
+
                         setVisualizerCharcter(character);
 
+                        queue.add(character);
+
+                        if (queue.isHomogeneous()){
+                            Log.v(TAG, "queue is homogeneous");
+                            commitCharacter(character);
+                        }
                     }
                     try {
                         Thread.sleep(200);
