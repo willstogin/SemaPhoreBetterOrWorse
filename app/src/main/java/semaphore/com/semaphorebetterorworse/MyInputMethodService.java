@@ -12,6 +12,7 @@ import android.os.Looper;
 import android.util.Log;
 import android.view.View;
 import android.view.inputmethod.InputConnection;
+import android.widget.TextView;
 
 import java.util.ArrayList;
 
@@ -44,6 +45,11 @@ public class MyInputMethodService extends InputMethodService
                 while (true) {
                     if (dataHandler != null) {
                         setVisualizer(dataHandler.leftBand.position, dataHandler.rightBand.position);
+                        String character = dataHandler.convertPositionsToLetter(
+                                dataHandler.leftBand.position,
+                                dataHandler.rightBand.position);
+                        setVisualizerCharcter(character);
+
                     }
                     try {
                         Thread.sleep(200);
@@ -200,6 +206,12 @@ public class MyInputMethodService extends InputMethodService
             }
         });
     }
+
+    public void setVisualizerCharcter(String character){
+        TextView visualizedCharacter = (TextView) mainView.findViewById(R.id.sample_letter);
+        visualizedCharacter.setText(character);
+    }
+
 
 
 }
